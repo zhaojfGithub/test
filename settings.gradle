@@ -1,0 +1,28 @@
+/**
+ * 文件初始化的时候执行，创建Settings对象
+ */
+pluginManagement { // 指定Gradle需要的用来搜索或下载的插件plugin的代码库
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+dependencyResolutionManagement {
+    /**
+     * PREFER_PROJECT(true)--首选项目存储库
+     * PREFER_SETTINGS(false)--首选设置存储库
+     * FAIL_ON_PROJECT_REPOS(false)--强制设置存储库
+     */
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+rootProject.name = "My Application"
+/**
+ * 给定目录添加到项目构建中
+ */
+include ':app'
+include ':kawaii_loadingview'

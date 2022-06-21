@@ -1,0 +1,20 @@
+{
+  "version": 3,
+  "artifactType": {
+    "type": "APK",
+    "kind": "Directory"
+  },
+  "applicationId": "com.zhao.myapplication.oppo",
+  "variantName": "appoRelease",
+  "elements": [
+    {
+      "type": "SINGLE",
+      "filters": [],
+      "attributes": [],
+      "versionCode": 3,
+      "versionName": "3.0",
+      "outputFile": "3.0_3.apk"
+    }
+  ],
+  "elementType": "File"
+}
