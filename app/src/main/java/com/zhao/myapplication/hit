@@ -15,3 +15,46 @@ ANR 是指应用程序未响应
 避免再主线程中进行耗时操作
 避免死锁，死循环的情况
 
+View的绘制流程
+从activity的setContentView 开始
+1.setContentView() -> getWindow() = PhoneWindow
+2.DecorView ->Activity中根View extends FrameLayout
+3.根据主题加载 加载不同的 layoutResource
+4.加载自己写的xml
+View的分发机制
+#这个可以看 https://www.bilibili.com/video/BV1RZ4y1T7q1?p=10&vd_source=c667e6b45694b3b681071057e680db10
+#直接教你手写Android事件分发，自己写一次印象深刻
+dispatchTouchEvent -> 事件分发
+dispatchTransformedTouchEvent -> 处理分发
+onInterceptTouchEvent -> 事件拦截
+onTouchEvent -> 事件处理
+
+从Activity的开始
+1.Activity 的 分发
+2.没有拦截  交给 ViewGroup
+3.没有拦截处理 交给下面ViewGroup 或者View
+4.View 也没有处理 原路返回
+一个U形状得传递图
+DOWN MOVE UP 比较重要吧 ,还有点击区域也要考虑到  大于left 小于 right 大于top 小于 bottom 才会接受到事件 有资格进行处理  TouchTarget View[] 额类似 Handler Message的方式吧有点  链表回收池
+TouchTarget 为当前View可以理解为缓存什么的
+
+Handler
+Message ->消息，数据单元
+Message Queue ->消息队列 先进先出
+Handler -> 将Message添加到消息队列，以及对消息队列的Message进行处理
+Looper -> 循环器，循环取出消息队列的消息，并交给相应的Handler
+
+handler.sendMessage
+handler.handleMessage
+
+Thread 线程
+1.继承Thread，重写run
+2.实现Runnable 实现run
+3.实现Callable 重写run
+
+线程同步
+1.ReentrantLock 重入锁 表示能够支持一个线程重复加锁  通常加到try之前 finally之后解锁
+2.await 进入阻塞状态，知道另一个线程调用同一个条件的signalAll方法
+3.synchronized
+4.volatile 当一个变量被volatile修饰之后就具备两个含义1.当线程修改了变量的值，变量的新值对其他线程是立即可见的2.禁止使用里那个重排序：编译重排序，运行重排序
+

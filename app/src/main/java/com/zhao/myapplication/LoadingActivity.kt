@@ -35,6 +35,14 @@ class LoadingActivity : AppCompatActivity() {
             message4.obj = "第四个"
             handler.sendMessageDelayed(message4,501)
         }.start()
+
+
+        val thread = object : Thread(){
+            override fun run() {
+                super.run()
+            }
+        }
+        thread.start()
     }
 
     private val handler  =  object : Handler(Looper.getMainLooper()){
