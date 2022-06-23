@@ -1,0 +1,16 @@
+//自定以View 用到 数学如此重要 ，怪方式没好好学吧
+Math.atan2 求出角度的弧度值
+弧度 = ( 角度 / 180 ) * 3.14  换算可以得出当前的角度
+sin cos tan
+tan = sin / cos
+sin = 对边 / 斜边
+cos = 临边 / 斜边
+Math.sin   用弧度换正弦
+Math.cos   用弧度换余弦
+Math.tan   用弧度换正切
+Math.asin  和上相反 用正弦换弧度 其他一样
+Math.sinh  e的x次方
+Math.toDegrees() 将弧度转换成角度
+Math.toRadians() 将角度转换为弧度
+
+极坐标 是一个圆 加上角度

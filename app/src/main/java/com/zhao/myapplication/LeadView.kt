@@ -50,23 +50,38 @@ class LeadView : View {
         mPath.lineTo(200F, -200F)
         canvas.drawPath(mPath, mPaint)
         val pathMeasure = PathMeasure(mPath, false)
-//        pathMeasure.getPosTan(pathMeasure.length * 5 / 6, pos, tan)
-//        Log.e("TAG", pathMeasure.length.toString())
-//        Log.e("TAG", "onDraw: pos[0]=" + pos[0] + ";pos[1]=" + pos[1])
-//        Log.e("TAG", "onDraw: tan[0]=" + tan[0] + ";tan[1]=" + tan[1])
-//        Log.e("TAG", Math.atan2(tan[0].toDouble(), tan[1].toDouble()).toString())
-//        val degrees = Math.atan2(tan[0].toDouble(), tan[1].toDouble()) * 180 / Math.PI
-//        Log.e("TAG", degrees.toString())
-        mFloat += 0.01F
-        if (mFloat >= 1) {
+        pathMeasure.getPosTan(pathMeasure.length * 1 / 6, pos, tan)
+        Log.e("TAG", pathMeasure.length.toString())
+        Log.e("TAG", "onDraw: pos[0]=" + pos[0] + ";pos[1]=" + pos[1])
+        Log.e("TAG", "onDraw: tan[0]=" + tan[0] + ";tan[1]=" + tan[1])
+        Log.e("TAG", Math.atan2(tan[0].toDouble(), tan[1].toDouble()).toString())
+        val a : Double = Math.atan2(tan[0].toDouble(), tan[1].toDouble()) * 180 / Math.PI
+        /**
+         * Math.atan2 返回弧度值
+         * 弧度 = ( 角度 / 180 ) * 3.14
+         */
+        Log.e("TAG", a.toString())
+       // mFloat += 0.01F
+        //if (mFloat >= 1) {
             mFloat = 0F
-        }
+       // }
+
         mMatrix.reset()
         //canvas.drawBitmap(mBitmap,null,RectF(0F,0F,200F,200F),mPaint)
+        pathMeasure.getPosTan(pathMeasure.length * mFloat, pos, tan)
+        Log.e("SumViewTan", "onDraw: tan[0]=" + tan[0] + ";tan[1]=" + tan[1])
+        Log.e("SumViewPos", "onDraw: pos[0]=" + pos[0] + ";pos[1]=" + pos[1])
+        Log.e("TAG", Math.atan2(tan[0].toDouble(), tan[1].toDouble()).toString())
+        val degrees = Math.atan2(tan[0].toDouble(), tan[1].toDouble()) * 180 / Math.PI
+        Log.e("TAG", degrees.toString())
+        Log.e("SumView1", mMatrix.toString())
         pathMeasure.getMatrix(pathMeasure.length * mFloat, mMatrix, PathMeasure.POSITION_MATRIX_FLAG or PathMeasure.TANGENT_MATRIX_FLAG)
+        Log.e("SumView2", mMatrix.toString())
         mMatrix.preTranslate(-mBitmap.width / 2F, -mBitmap.height / 2F)
+        Log.e("SumView3", mMatrix.toString())
         canvas.drawBitmap(mBitmap,mMatrix,mPaint)
-        invalidate()
+
+        //invalidate()
     }
 
     private var mFloat: Float = 0F

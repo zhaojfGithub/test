@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(LeadView(this))
+        setContentView(SunView(this))
         //val frameLayout: FrameLayout = findViewById(R.id.frameLayout)
        /* val testFragment1: TestFragment = TestFragment.newInstance("testFragment1","")
         val testFragment2: TestFragment = TestFragment.newInstance("testFragment2","")
