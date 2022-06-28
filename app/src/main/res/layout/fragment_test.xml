@@ -25,7 +25,6 @@
         android:layout_height="wrap_content"/>
 
     <Button
-        android:id="@+id/button1"
         android:text="切换Toolbar"
         app:layout_constraintTop_toBottomOf="@id/button"
         app:layout_constraintEnd_toEndOf="parent"

@@ -9,6 +9,7 @@ import android.graphics.Path;
 import android.graphics.PathMeasure;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -80,11 +81,24 @@ public class SunView extends View {
         if (now >= 360) {
             now = 0;
         }
-        invalidate();
+        //invalidate();
     }
 
-    private int row = 0;
-    private float[] pos = new float[2];
-    private float[] tan = new float[2];
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                //Log.e("SunView","ACTION_DOWN");
+                break;
+            case MotionEvent.ACTION_MOVE:
+                //Log.e("SunView","ACTION_MOVE");
+                break;
+            case MotionEvent.ACTION_UP:
+                //Log.e("SunView","ACTION_UP");
+                break;
+        }
+        performClick();
+        return true;
 
+    }
 }

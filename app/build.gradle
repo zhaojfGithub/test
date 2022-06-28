@@ -10,7 +10,6 @@ android {
     flavorDimensions "asdasdfafasfsadgsdgkjashfgas"
 
 
-
     defaultConfig {
         //不一定是包名
         applicationId "com.zhao.myapplication"
@@ -20,7 +19,18 @@ android {
         targetSdk Integer.parseInt(prop10)
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         //添加BuildConfig
-        buildConfigField 'String','BASE_URL','"http:www.baidu.com"'
+        buildConfigField 'String', 'BASE_URL', '"http:www.baidu.com"'
+
+        ndk {
+            abiFilters 'arm64-v8a'
+        }
+        externalNativeBuild {
+            cmake {
+                cppFlags ''
+            }
+        }
+
+
     }
 
 
@@ -61,15 +71,16 @@ android {
         jvmTarget = '1.8'
     }
 
-    buildFeatures{
+    buildFeatures {
         viewBinding true
     }
 
-    applicationVariants.all{ variant->
-        variant.outputs.all{ output->
+
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
             def outputFile = output.outputFile
-            if (outputFile != null && outputFile.name.endsWith('.apk')){
-                productFlavors.each{ data->
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                productFlavors.each { data ->
                     def fileName = "${data.versionName}_${data.versionCode}.apk"
                     outputFileName = fileName
                 }
@@ -85,6 +96,8 @@ dependencies {
     implementation 'com.google.android.material:material:1.5.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    //implementation project(path: ':mylibrary')
+    implementation files('libs\\sdk.jar')
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
@@ -149,14 +162,78 @@ gradle.addBuildListener(new BuildListener() {
     }
 })
 
-task runGradle{
+task runGradle {
     println "configure runGradle AAAAA"
     doFirst {
         println "doFirst runGradle AAAAA"
     }
 }
 
-task runProExtPro{
+task runProExtPro {
     println "runProExtPro\t" + prop3
     println "runProExtPro\t" + prop2
+}
+
+
+task(dynamicSo) {
+
+}doLast {
+        println("dynamicSo insert!!!! ")
+        //projectDir 在哪个project下面，projectDir就是哪个路径
+        //print(getRootProject().findAll(null))
+
+        /*def file = new File("${projectDir}/build/intermediates/merged_native_libs/debug/out/lib")
+    //默认删除所有的so库
+    if (file.exists()) {
+        file.listFiles().each {
+            if (it.isDirectory()) {
+                it.listFiles().each {
+                    target ->
+                        print("file ${target.name}")
+                        def compareName = target.name
+                        deleteSoName.each {
+                            if (compareName.contains(it)) {
+                                target.delete()
+                            }
+                        }
+                }
+            }
+        }
+    } else {
+        print("nil")
+    }*/
+    }
+
+
+
+afterEvaluate {
+    println("dynamicSo task start")
+    def customer = tasks.findByName("dynamicSo")
+    if (customer != null) {
+        println("customer no null")
+    } else {
+        println("customer null")
+    }
+//    def merge = 'merge[\\w]*DebugNativeLibs'
+//    def strip = 'strip[\\w]*DebugDebugSymbols'
+    def merge = 'mergeHuaweiDebugNativeLibs'
+    def strip = 'stripHuaweiDebugDebugSymbols'
+    Task mergeClass
+    Task stripClass
+    tasks.forEach {
+        if (it.name.matches(merge)) {
+            mergeClass = it
+        }
+        if (it.name.matches(strip)) {
+            stripClass = it
+        }
+
+    }
+    if (mergeClass != null || stripClass != null) {
+        customer.mustRunAfter(mergeClass)
+        stripClass.dependsOn(customer)
+        println("yes")
+    } else {
+        println("no")
+    }
 }
