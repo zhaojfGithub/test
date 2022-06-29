@@ -58,3 +58,54 @@ Thread 线程
 3.synchronized
 4.volatile 当一个变量被volatile修饰之后就具备两个含义1.当线程修改了变量的值，变量的新值对其他线程是立即可见的2.禁止使用里那个重排序：编译重排序，运行重排序
 
+ListView和RecyclerView的区别
+ListView：只能垂直滑动。有几个默认的Adapter。拥有子item的监听函数。不强制使用ViewHolder。两级缓存
+RecyclerView：支持水平，垂直，瀑布流。Adapter需要自己实现。需要自己去实现接口。强制使用ViewHolder。四级缓存
+ListView两级缓存
+1.mActiveViews用户屏幕内ItemView的快速服用
+2.mScrapViews用户缓存离开屏幕的ItemView
+RecyclerView的四级缓存
+1.mChangeScrap与mAttachedScrap用于屏幕内ItemView的快速移动
+2.mChangeViews 默认上限为2，及缓存屏幕外的2个ItemView
+3.mViewCacheExtension 用户自定义
+4.RecyclerviewPool的上限为5
+缓存对象的不同
+Recyclerview缓存的是ViewHolder，ListView缓存的是View
+
+ListView相对于RecyclerView的优化
+1.实现了HeaderView和FooterView的方法
+2.分割线可以直接设置
+3.实现了点击方法
+Recyclerview相对于LisView的优点
+1.封装了ViewHolder，效率更高
+2.可以添加增删Item动画，侧滑功能
+3.支持局部刷新
+4.更加解耦
+
+滑动冲突
+
+
+
+activity启动模式
+standard
+singleTop   生命周期 onCreate->onStart->onResume->onPause->onResume
+singleTask
+singleInstance
+
+HashMap
+HashMap本质上是一个散列表
+三个问题：1.散列函数，2.哈希冲突，3.扩容方案
+数据结构  多线程问题
+HashMap属于Map集合体系的一部分，同时继承了Serializable可以被序列化，继承cloneable可以被复制
+1.哈希函数的目标是计算key在数组中的下标，判断哈希函数的标准是：散列是否均匀，计算是否简单
+  通过高16位与低16位进行异或运算来让高位参与散列，提高性能
+  HashMap数组的长度位2的整数次幂来简化取模运算，提高性能
+  HashMap通过控制初始化数组长度为2的正数次幂、扩容为原来2倍来控制数组长度一定为2的整数次幂
+2.Hash冲突是指两个不同的key经过hash计算之后得到的数组下标是相同的
+  HashMap采用的是链地址法，jdk1.8增加了红黑树优化
+  出现冲突之后会在当前节点形成链表，当链表过长之后，会自动转化为红黑树，时间复杂度OlogN
+    1.当链表的长度>=8且数组长度>=64,会转化为红黑树
+    2.当链表长度>=8,但是数组长度<64,会优先进行扩容
+    3.当红黑树节点<=6 会自动转化为链表
+
+

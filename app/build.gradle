@@ -208,7 +208,12 @@ task(dynamicSo) {
 
 afterEvaluate {
     println("dynamicSo task start")
-    def customer = tasks.findByName("dynamicSo")
+    /*from components.forEach({
+        println(it.name)
+    })*/
+
+    /*def customer = tasks.findByName("dynamicSo")
+
     if (customer != null) {
         println("customer no null")
     } else {
@@ -221,6 +226,7 @@ afterEvaluate {
     Task mergeClass
     Task stripClass
     tasks.forEach {
+        println(it)
         if (it.name.matches(merge)) {
             mergeClass = it
         }
@@ -235,5 +241,5 @@ afterEvaluate {
         println("yes")
     } else {
         println("no")
-    }
+    }*/
 }
