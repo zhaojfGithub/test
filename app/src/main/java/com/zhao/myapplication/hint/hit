@@ -91,21 +91,18 @@ standard
 singleTop   生命周期 onCreate->onStart->onResume->onPause->onResume
 singleTask
 singleInstance
+service启动模式
+startService -> 不进行通讯 中止使用stopService
+bindService  -> 可以进行通讯  中止使用unbindService
+intent 一个封装了HandlerThread和Handler的异步框架，可用于后台耗时的任务，任务执行后会自动停止，优先级必单纯的线程高很多
+广播 -> BroadcastReceiver
+动态注册 ->
+  优势：可以自由的控制注册和取消，有很大的灵活性
+  劣势：只有在注册才能起作用，在activity的onDestroy后如果未被注销，会报异常
+静态注册 ->
+  不受程序是否启动的约束，是优势也是劣势
+内容提供者 content provider
+使一个应用程序的指定数据集提供给其他的程序，其他应用可以通过ContentResolver从该内容提供这种存取或存入数据
 
-HashMap
-HashMap本质上是一个散列表
-三个问题：1.散列函数，2.哈希冲突，3.扩容方案
-数据结构  多线程问题
-HashMap属于Map集合体系的一部分，同时继承了Serializable可以被序列化，继承cloneable可以被复制
-1.哈希函数的目标是计算key在数组中的下标，判断哈希函数的标准是：散列是否均匀，计算是否简单
-  通过高16位与低16位进行异或运算来让高位参与散列，提高性能
-  HashMap数组的长度位2的整数次幂来简化取模运算，提高性能
-  HashMap通过控制初始化数组长度为2的正数次幂、扩容为原来2倍来控制数组长度一定为2的整数次幂
-2.Hash冲突是指两个不同的key经过hash计算之后得到的数组下标是相同的
-  HashMap采用的是链地址法，jdk1.8增加了红黑树优化
-  出现冲突之后会在当前节点形成链表，当链表过长之后，会自动转化为红黑树，时间复杂度OlogN
-    1.当链表的长度>=8且数组长度>=64,会转化为红黑树
-    2.当链表长度>=8,但是数组长度<64,会优先进行扩容
-    3.当红黑树节点<=6 会自动转化为链表
 
 
