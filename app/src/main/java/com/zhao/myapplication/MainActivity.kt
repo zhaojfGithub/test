@@ -7,8 +7,12 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.*
 import android.util.Log
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
+import com.bumptech.glide.Glide
 import com.zhao.myapplication.databinding.ActivityMainBinding
 import com.zhao.myapplication.databinding.ActivityTestBinding
 import com.zhao.mylibrary.MyStringUtil
@@ -16,6 +20,8 @@ import java.io.File
 
 class MainActivity : AppCompatActivity() {
 
+
+    val viewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
     private val fragments: List<Fragment> = listOf(
         TestFragment.newInstance("testFragment1", ""),
@@ -61,6 +67,7 @@ class MainActivity : AppCompatActivity() {
             onBackPressed()
         }
         val file = File(this.filesDir,"aaa.txt")
+       // Glide.with(this).load("").into()
         Log.e("MainActivity",file.absolutePath)
        /* Thread{
             if (!file.exists()){

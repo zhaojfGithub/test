@@ -7,6 +7,21 @@
 面向对象优点：效率高，因为不需要实例化对象 缺点。耦合度高，扩展性差，不容易维护
 面向对象的优化：耦合低，扩展性强，易维护，缺点 效率低  特性：封装，继承，多态
 
+java八大基础数据类型
+1byte = 8bit
+整数型：byte short int long
+浮点型：float double
+布尔型：boolean
+字符型：char
+byte = 1byte = 8bit
+short = 2byte
+int = 4byte
+long = 8byte
+float = 4byte
+double = 8byte
+boolean = 1byte
+char = 2byte
+
 ConcurrentHashMap 线程安全  锁的是数组的节点
 
 HashMap

@@ -43,6 +43,12 @@ Message ->消息，数据单元
 Message Queue ->消息队列 先进先出
 Handler -> 将Message添加到消息队列，以及对消息队列的Message进行处理
 Looper -> 循环器，循环取出消息队列的消息，并交给相应的Handler
+Handler 消息机制用于同进程的线程间通信，其核心是线程间共享内存空间，而不同进程拥有不同的地址空间，也就不能用 handler 来实现进程间通信。
+Handler 的处理过程运行在创建Handler的线程里
+一个looper对应一个MessageQueue
+一个线程对应一个Looper
+一个Looper可以对应多个Handler
+
 
 handler.sendMessage
 handler.handleMessage
@@ -103,6 +109,37 @@ intent 一个封装了HandlerThread和Handler的异步框架，可用于后台�
   不受程序是否启动的约束，是优势也是劣势
 内容提供者 content provider
 使一个应用程序的指定数据集提供给其他的程序，其他应用可以通过ContentResolver从该内容提供这种存取或存入数据
+
+Glide 包括 封装，加息，下载，解码，比那换，缓存，显示等操作
+封装参数->解析路径->读取图片缓存->有缓存->显示
+                             ->无缓存->查找文件->本地文件|已下载->解码
+                                             ->网络图片&未下载->下载文件->解码 ->变换->缓存->显示
+缓存 ->四级缓存
+1.活动缓存  HashMap 或引用 来缓存正在使用中的图片，保护图片不会被LruCache算法回收掉
+2.内存缓存 LRU     ：防止应用重复将图片读入到内存，造成内存资源浪费
+3.磁盘缓存 资源类型 ：防止应用重复的从网络或者其他地方下载和读取数据
+4.磁盘缓存 原始数据
+根据图片地址，宽高，变换，签名等生成key
+如果不缓存变换后的类型相当于每次都要进行一次变换操作
+如果不缓存原始数据则每次都要去重新下载数据
+
+Glide 图片格式
+ALPHA_8
+RGB_565
+ARGB_4444
+ARGB_8888  每个像素占用4个字节
+RGBA_F16
+HARDWARE 一种特殊的配置，减少了内存占用同时也加快了Bitmap的绘制
+Glide生命周期管理
+在传入context中会生成一个隐式的Fragment，获取requestManger(监听生命周期)  requestMangerFragment
+requestManger的生成 requestManager = factory.build(glide, current.getGlideLifecycle(), current.getRequestManagerTreeNode(), context);
+
+ViewModel
+绑定的时候重要的是ViewModelStoreOwner，viewModelStore是一个HashMap 以String为key，以ViewModel为value
+当activity销毁重建的时候ComponentActivity有一个静态类NonConfigurationInstances在onDestroy保存到里面去，然后在attach方法中恢复
+接收到Lifecycle.Evnet.on_destory onDestroy的时候，会调用clear，然后清空
+
+
 
 
 
