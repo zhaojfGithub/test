@@ -26,4 +26,5 @@ class HeartbeatClient(private val handler: Handler) {
             isSend = true
         }
     }
+
 }
