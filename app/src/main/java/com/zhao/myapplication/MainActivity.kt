@@ -1,12 +1,16 @@
 package com.zhao.myapplication
 
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.app.Service
 import android.content.ComponentName
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.*
 import android.util.Log
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -21,7 +25,7 @@ import java.io.File
 class MainActivity : AppCompatActivity() {
 
 
-    val viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+    //val viewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
     private val fragments: List<Fragment> = listOf(
         TestFragment.newInstance("testFragment1", ""),
@@ -62,9 +66,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(viewBinder.root)
         val intent = Intent(this,TestService::class.java)
         bindService(intent,conn, Service.BIND_AUTO_CREATE)
+        initLauncher()
         viewBinder.button.setOnClickListener {
-            unbindService(conn)
-            onBackPressed()
+            obtainPermission()
+            //go()
+            /*unbindService(conn)
+            onBackPressed()*/
         }
         val file = File(this.filesDir,"aaa.txt")
        // Glide.with(this).load("").into()
@@ -110,6 +117,32 @@ class MainActivity : AppCompatActivity() {
         //cutFragment(0)
     }
 
+    private lateinit var permissionLauncher : ActivityResultLauncher<String>
+
+    private fun initLauncher() {
+        permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+            if (it){
+                Log.e("MainActivity","请求成功")
+            }else{
+                Log.e("MainActivity","请求失败")
+            }
+        }
+    }
+
+    private fun obtainPermission() {
+        permissionLauncher.launch(android.Manifest.permission.SYSTEM_ALERT_WINDOW)
+    }
+
+    fun go(){
+        val startY = viewBinder.ivLogo.bottom.toFloat()
+        val endY = viewBinder.ivLogo.bottom - viewBinder.ivLogo.height.toFloat()
+        val objectAnimatorY = ObjectAnimator.ofFloat(viewBinder.ivLogo, "translationY", viewBinder.ivLogo.height * -1F)
+        val objectAnimatorAlpha = ObjectAnimator.ofFloat(viewBinder.ivLogo, "alpha",1F,0F)
+        val animatorSet = AnimatorSet()
+        animatorSet.duration = 3000
+        animatorSet.play(objectAnimatorY).with(objectAnimatorAlpha)
+        animatorSet.start()
+    }
 
     fun cutFragment(position: Int) {
         /*Log.e("ACT","position:$position")
