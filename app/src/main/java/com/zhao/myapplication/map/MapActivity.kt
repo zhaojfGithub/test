@@ -1,40 +1,37 @@
 package com.zhao.myapplication.map
 
 import android.Manifest
-import android.content.Intent
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.FrameLayout
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.result.registerForActivityResult
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.amap.api.location.AMapLocation
 import com.amap.api.location.AMapLocationClient
 import com.amap.api.location.AMapLocationClientOption
 import com.amap.api.location.AMapLocationListener
 import com.amap.api.maps2d.AMapOptions
+import com.amap.api.maps2d.CameraUpdateFactory
 import com.amap.api.maps2d.MapView
-import com.amap.api.maps2d.model.CameraPosition
-import com.amap.api.maps2d.model.LatLng
-import com.amap.api.maps2d.model.MyLocationStyle
-import com.zhao.myapplication.R
+import com.amap.api.maps2d.model.*
+import com.amap.api.services.core.LatLonPoint
+import com.amap.api.services.route.*
 import com.zhao.myapplication.databinding.ActivityMapBinding
 
 
 /**
  *
  */
-class MapActivity : AppCompatActivity() {
+class MapActivity : AppCompatActivity(), RouteSearch.OnRouteSearchListener {
 
 
     private lateinit var binding: ActivityMapBinding
 
     private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
 
-    private var mapView:MapView? =null
+    private var mapView: MapView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,24 +69,28 @@ class MapActivity : AppCompatActivity() {
         AMapLocationClient.updatePrivacyShow(this, true, true)
         AMapLocationClient.updatePrivacyAgree(this, true)
         binding.btStartLocation.setOnClickListener {
-            if (getIsPermission()){
-                if (::mLocationClient.isInitialized){
+            if (getIsPermission()) {
+                if (::mLocationClient.isInitialized) {
                     mLocationClient.startLocation()
-                }else{
+                } else {
                     startLocation()
                 }
 
-            }else{
-                permissionLauncher.launch(arrayOf(
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ))
+            } else {
+                permissionLauncher.launch(
+                    arrayOf(
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    )
+                )
             }
         }
+        binding.mapView.onCreate(null)
+
 
     }
 
-    private fun getIsPermission() : Boolean{
-         return ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+    private fun getIsPermission(): Boolean {
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
     }
 
     private fun startLocation() {
@@ -147,16 +148,29 @@ class MapActivity : AppCompatActivity() {
      *
      */
     private fun settingMapLocation(mapLocation: AMapLocation) {
+
         val aOptions = AMapOptions()
-        val latLng = LatLng(mapLocation.latitude,mapLocation.longitude)
-        val cameraPosition = CameraPosition(latLng,10F,0F,0F)
-        aOptions.camera(cameraPosition)
-        mapView = MapView(this,aOptions)
-        val mParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,FrameLayout.LayoutParams.MATCH_PARENT)
 
-        binding.frameLayout.addView(mapView,mParams)
-        //mapView?.map?.isMyLocationEnabled = false
+        val myLocationStyle = MyLocationStyle()
+        myLocationStyle.showMyLocation(true)
+        binding.mapView.map.setMyLocationStyle(myLocationStyle)
 
+        val mLatLng = LatLng(mapLocation.latitude, mapLocation.longitude)
+        val mCameraPosition = CameraPosition(mLatLng, 18F, 0F, 0F)
+        val mCameraUpdate = CameraUpdateFactory.newCameraPosition(mCameraPosition)
+        val marker = MarkerOptions().position(mLatLng).title("这是一个测试点位")
+        binding.mapView.map.moveCamera(mCameraUpdate)
+        binding.mapView.map.addMarker(marker)
+    }
+
+    private fun mapPathPlanning() {
+        val routeSearch = RouteSearch(this)
+        routeSearch.setRouteSearchListener(this)
+        val latLngStart = LatLonPoint(31.295844, 121.438815)
+        val latLngEnd = LatLonPoint(31.278277, 121.403471)
+        val fromAndTo = RouteSearch.FromAndTo(latLngStart, latLngEnd)
+        val query = RouteSearch.DriveRouteQuery(fromAndTo, RouteSearch.DRIVING_SINGLE_DEFAULT, null, null, null)
+        routeSearch.calculateDriveRouteAsyn(query)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -178,5 +192,25 @@ class MapActivity : AppCompatActivity() {
         super.onDestroy()
         mLocationClient.onDestroy()
         mapView?.onDestroy()
+    }
+
+    override fun onBusRouteSearched(p0: BusRouteResult?, p1: Int) {
+
+    }
+
+    override fun onDriveRouteSearched(p0: DriveRouteResult?, p1: Int) {
+
+    }
+
+    override fun onWalkRouteSearched(p0: WalkRouteResult?, p1: Int) {
+
+    }
+
+    override fun onRideRouteSearched(p0: RideRouteResult?, p1: Int) {
+
+    }
+
+    private fun mLog(msg:String){
+        Log.e("MapActivity",msg)
     }
 }

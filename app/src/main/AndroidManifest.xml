@@ -52,7 +52,7 @@
             android:name=".test.MyTestActivity"
             android:exported="false" />
         <activity
-            android:name=".map.MapActivity"
+            android:name=".TestActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -69,10 +69,6 @@
         <activity
             android:name=".bluetooth.BluetoothActivity"
             android:exported="false" />
-        <activity
-            android:name=".TestActivity"
-            android:exported="true"
-            android:launchMode="singleTop" />
         <activity
             android:name=".LoadingActivity"
             android:exported="false" />

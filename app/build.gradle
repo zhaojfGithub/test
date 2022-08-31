@@ -98,8 +98,8 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     //implementation project(path: ':mylibrary')
     implementation files('libs/sdk.jar')
-
     implementation files('libs/AMap2DMap_6.0.0_AMapSearch_9.2.0_AMapLocation_6.1.0_20220414.jar')
+
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
