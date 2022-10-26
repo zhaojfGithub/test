@@ -7,8 +7,13 @@ import android.app.Service
 import android.content.ComponentName
 import android.content.Intent
 import android.content.ServiceConnection
+import android.graphics.Color
 import android.os.*
 import android.util.Log
+import android.view.Gravity
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -21,6 +26,7 @@ import com.zhao.myapplication.databinding.ActivityMainBinding
 import com.zhao.myapplication.databinding.ActivityTestBinding
 import com.zhao.mylibrary.MyStringUtil
 import java.io.File
+import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
 
@@ -48,6 +54,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var viewBinder: ActivityMainBinding
 
+    private val viewModel : MainViewModel by viewModels()
+
     private var conn : ServiceConnection = object : ServiceConnection{
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             Log.e(this@MainActivity.javaClass.simpleName,"绑定成功")
@@ -67,12 +75,9 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this,TestService::class.java)
         bindService(intent,conn, Service.BIND_AUTO_CREATE)
         initLauncher()
-        viewBinder.button.setOnClickListener {
-            obtainPermission()
-            //go()
-            /*unbindService(conn)
-            onBackPressed()*/
-        }
+        /*viewBinder.button.setOnClickListener {
+            viewModel.testLaunch()
+        }*/
         val file = File(this.filesDir,"aaa.txt")
        // Glide.with(this).load("").into()
         Log.e("MainActivity",file.absolutePath)
@@ -115,6 +120,25 @@ class MainActivity : AppCompatActivity() {
             }
         }*/
         //cutFragment(0)
+
+
+
+        val layoutParams = ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT).apply {
+            topMargin = 10
+            leftMargin = 20
+            rightMargin = 20
+            bottomMargin = 10
+        }
+        viewBinder.flowLayout.removeAllViews()
+        for (i in 0..20){
+            val textView = TextView(this)
+            textView.text = "这是第${i}个"
+            textView.gravity = Gravity.CENTER
+            textView.layoutParams = layoutParams
+            textView.setBackgroundColor(Color.RED)
+            viewBinder.flowLayout.addView(textView)
+        }
+
     }
 
     private lateinit var permissionLauncher : ActivityResultLauncher<String>
@@ -133,7 +157,7 @@ class MainActivity : AppCompatActivity() {
         permissionLauncher.launch(android.Manifest.permission.SYSTEM_ALERT_WINDOW)
     }
 
-    fun go(){
+/*    fun go(){
         val startY = viewBinder.ivLogo.bottom.toFloat()
         val endY = viewBinder.ivLogo.bottom - viewBinder.ivLogo.height.toFloat()
         val objectAnimatorY = ObjectAnimator.ofFloat(viewBinder.ivLogo, "translationY", viewBinder.ivLogo.height * -1F)
@@ -142,7 +166,7 @@ class MainActivity : AppCompatActivity() {
         animatorSet.duration = 3000
         animatorSet.play(objectAnimatorY).with(objectAnimatorAlpha)
         animatorSet.start()
-    }
+    }*/
 
     fun cutFragment(position: Int) {
         /*Log.e("ACT","position:$position")

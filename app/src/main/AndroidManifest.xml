@@ -52,7 +52,7 @@
             android:name=".test.MyTestActivity"
             android:exported="false" />
         <activity
-            android:name=".TestActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

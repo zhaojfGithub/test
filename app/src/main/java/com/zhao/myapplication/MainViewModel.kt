@@ -3,6 +3,9 @@ package com.zhao.myapplication
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import okhttp3.*
 import java.io.File
 import java.io.IOException
@@ -20,24 +23,30 @@ class MainViewModel : ViewModel() {
     private val client: OkHttpClient = OkHttpClient()
 
 
-    /**
-     * 同步
-     */
-    fun testSynchronousOkhttp() {
-        val request = Request.Builder()
-            .url("https://publicobject.com/helloworld.txt")
-            .build()
-        client.newCall(request).execute().use { response ->
-            if (!response.isSuccessful) throw IOException("Unexpected code $response")
-            for ((name, value) in response.headers) {
-                mLog("name = $name value = $value")
+
+    fun testLaunch() {
+        try {
+            viewModelScope.launch {
+
+                throw Exception("这是一个错误")
+                delay(200)
+                Log.e("MainViewModel","测试")
             }
-            mLog(response.body!!.string())
+        }catch (e:Exception){
+            Log.e("MainViewModel",e.toString())
         }
     }
 
 
-    private fun mLog(msg: String) {
-        Log.e("MainViewModel", msg)
+    /**
+     * login
+     * user
+     * ku cui guan li
+     * yu yin
+     * common
+     * base
+     */
+    private fun testStart1(){
+
     }
 }

@@ -47,8 +47,6 @@ class TestActivity : AppCompatActivity() {
         val intent = Intent(this,TestService::class.java)
         bindService(intent,conn, Service.BIND_AUTO_CREATE)
         mLog("onCreate")
-        val a: String = "A"
-        a.toInt()
         Singleton.getInstance()
     }
 

@@ -1,0 +1,26 @@
+runBlocking {
+       //启动一个新协程，并阻塞当前线程，直到内存所有逻辑及子协程逻辑全部执行完成
+}
+GlobalScope.launch {
+       //再应用范围内启动一个新协程，协程的生命周期与应用程序一致。这样启动的协程并不能使线程保活，就像是守护线程
+
+}
+CoroutineScope(Dispatchers.Default).launch {
+      //在应用中推荐使用的方式，为自己的组件实现CoroutieScope接口，在需要的地方使用launch方法启动协程
+      //使得协程和该组件生命周期绑定，组件销毁时，协程一并销毁
+}
+
+//launch{} 异步启动一个子协程
+//async{} 移动启动一个子协程，并返回Deffer对象，可通过Deffer.await方法等待子协程执行完成并获取结果，常用于并发执行-同步等待的情况
+
+取消
+launch 返回job
+async 返回Deffer
+调用cancel方法
+
+3.异常
+kotlin协程的异常有两种
+1.协程取消
+2.常规因为程序出错导致异常，共有两种传播之际
+(1)： launch 将异常自动想父协程抛出  导致父协程退出，说明try/catch 必须写在launch之内才能捕获到程序产生的异常，不然父协程推出后，会导致在launch之外的catch 无法捕获导异常，导致崩溃
+(2):  async 将异常暴露给用户 ，通过捕获deffer.await 抛出的异常

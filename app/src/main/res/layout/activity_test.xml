@@ -29,11 +29,9 @@
         app:layout_constraintStart_toEndOf="@+id/button"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.zhao.myapplication.DragFrameLayout
-        android:id="@+id/dragLayout"
-        android:backgroundTint="@color/teal_200"
-        android:layout_width="0dp"
-        android:layout_height="500dp"
+    <com.zhao.myapplication.VoiceBounceView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
