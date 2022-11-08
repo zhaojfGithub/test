@@ -1,0 +1,4 @@
+1.StatelessWidget用于不需要维护状态的场景，它通常在build方法中通过嵌套其他 widget 来构建UI，在构建过程中会递归的构建其嵌套的 widget
+build方法有一个context参数，它是BuildContext类的一个实例，表示当前 widget 在 widget 树中的上下文，
+2.StatefulWidget,可能会调用多次
+createState() 用于创建和 StatefulWidget 相关的状态，它在StatefulWidget 的生命周期中可能会被多次调用。

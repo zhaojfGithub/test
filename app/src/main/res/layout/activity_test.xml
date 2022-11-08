@@ -29,7 +29,7 @@
         app:layout_constraintStart_toEndOf="@+id/button"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.zhao.myapplication.VoiceBounceView
+    <com.zhao.myapplication.weidth.VoiceBounceView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

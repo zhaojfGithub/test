@@ -3,6 +3,7 @@ package com.zhao.myapplication
 import android.os.*
 import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
+import com.zhao.myapplication.weidth.LoadingTextView
 
 class LoadingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

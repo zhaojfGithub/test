@@ -18,6 +18,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
@@ -25,7 +26,11 @@ import com.bumptech.glide.Glide
 import com.zhao.myapplication.databinding.ActivityMainBinding
 import com.zhao.myapplication.databinding.ActivityTestBinding
 import com.zhao.mylibrary.MyStringUtil
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import java.io.File
+import kotlin.concurrent.thread
 import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
@@ -72,8 +77,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         viewBinder = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinder.root)
-        val intent = Intent(this,TestService::class.java)
-        bindService(intent,conn, Service.BIND_AUTO_CREATE)
+        /*val intent = Intent(this,TestService::class.java)
+        bindService(intent,conn, Service.BIND_AUTO_CREATE)*/
         initLauncher()
         /*viewBinder.button.setOnClickListener {
             viewModel.testLaunch()
@@ -123,7 +128,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        val layoutParams = ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT).apply {
+        /*val layoutParams = ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT).apply {
             topMargin = 10
             leftMargin = 20
             rightMargin = 20
@@ -139,6 +144,15 @@ class MainActivity : AppCompatActivity() {
             viewBinder.flowLayout.addView(textView)
         }
 
+        viewBinder.button.setOnClickListener {
+            Thread {
+
+                    EventBus.getDefault().post("hello eventbus")
+
+
+            }.start()
+
+        }*/
     }
 
     private lateinit var permissionLauncher : ActivityResultLauncher<String>
@@ -185,6 +199,25 @@ class MainActivity : AppCompatActivity() {
         }
         //beginTransaction.replace(R.id.frameLayout,fragment)
         beginTransaction.commit()*/
+    }
+
+
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
+
+    /**
+     * 订阅者
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(msg:String){
+        Log.e("MainActivity","收到了订阅事件${msg}")
+    }
+
+    override fun onStop() {
+        EventBus.getDefault().unregister(this)
+        super.onStop()
     }
 
 

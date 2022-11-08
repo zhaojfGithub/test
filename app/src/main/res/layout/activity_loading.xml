@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".LoadingActivity">
 
-    <com.zhao.myapplication.LoadingTextView
+    <com.zhao.myapplication.weidth.LoadingTextView
         android:id="@+id/loadView"
         android:layout_width="100dp"
         android:layout_height="100dp"

@@ -125,6 +125,8 @@ dependencies {
     implementation "com.squareup.okhttp3:okhttp:4.10.0"
 
     implementation "io.reactivex.rxjava3:rxjava:3.1.5"
+
+    implementation "org.greenrobot:eventbus:3.3.1"
 }
 
 gradle.beforeProject {

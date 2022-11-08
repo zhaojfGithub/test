@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.zhao.mylibrary.MyStringUtil
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import okhttp3.*
@@ -20,14 +21,14 @@ class MainViewModel : ViewModel() {
 
     private val data = MutableLiveData<String>()
 
-    private val client: OkHttpClient = OkHttpClient()
+
 
 
 
     fun testLaunch() {
         try {
             viewModelScope.launch {
-
+                MyStringUtil.ndkString()
                 throw Exception("这是一个错误")
                 delay(200)
                 Log.e("MainViewModel","测试")
@@ -47,6 +48,7 @@ class MainViewModel : ViewModel() {
      * base
      */
     private fun testStart1(){
-
+        val builder = OkHttpClient.Builder()
+            .build()
     }
 }
