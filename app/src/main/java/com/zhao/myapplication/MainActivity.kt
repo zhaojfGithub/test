@@ -3,8 +3,10 @@ package com.zhao.myapplication
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.app.Service
 import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.graphics.Color
@@ -13,16 +15,22 @@ import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.annotation.AttrRes
+import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.use
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import com.bumptech.glide.Glide
+import com.google.android.material.transition.platform.MaterialContainerTransform
+import com.google.android.material.transition.platform.MaterialContainerTransformSharedElementCallback
 import com.zhao.myapplication.databinding.ActivityMainBinding
 import com.zhao.myapplication.databinding.ActivityTestBinding
 import com.zhao.mylibrary.MyStringUtil
@@ -77,15 +85,34 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         viewBinder = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinder.root)
+
+       /* viewBinder.root.transitionName = "Toolbar"
+        window.sharedElementEnterTransition = MaterialContainerTransform().apply {
+            addTarget(viewBinder.root)
+            duration = 300L
+            containerColor = ContextCompat.getColor(this@MainActivity,R.color.white)
+        }
+        window.sharedElementReturnTransition = MaterialContainerTransform().apply {
+            addTarget(viewBinder.root)
+            duration = 250L
+            containerColor = ContextCompat.getColor(this@MainActivity,R.color.white)
+        }
+        window.sharedElementsUseOverlay = false
+
+
+        val name = "Toolbar"
+        viewBinder.button1.text = name
+
+*/
         /*val intent = Intent(this,TestService::class.java)
         bindService(intent,conn, Service.BIND_AUTO_CREATE)*/
         initLauncher()
         /*viewBinder.button.setOnClickListener {
             viewModel.testLaunch()
         }*/
-        val file = File(this.filesDir,"aaa.txt")
+        //val file = File(this.filesDir,"aaa.txt")
        // Glide.with(this).load("").into()
-        Log.e("MainActivity",file.absolutePath)
+       // Log.e("MainActivity",file.absolutePath)
        /* Thread{
             if (!file.exists()){
                 file.createNewFile()
@@ -221,4 +248,16 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+}
+
+@ColorInt
+@SuppressLint("Recycle")
+fun Context.themeColor(
+    @AttrRes themeAttrId: Int
+): Int {
+    return obtainStyledAttributes(
+        intArrayOf(themeAttrId)
+    ).use {
+        it.getColor(0, Color.MAGENTA)
+    }
 }

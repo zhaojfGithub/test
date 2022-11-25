@@ -1,24 +1,30 @@
 package com.zhao.myapplication;
 
-import android.util.Log;
+import android.content.Context;
+import android.util.AttributeSet;
+import android.widget.ScrollView;
 
 /**
  * 创建时间： 2022/6/30
  * 编   写：  zjf
  * 页面功能:
  */
-public class Singleton {
+public class Singleton extends ScrollView {
 
-    private static final Singleton SINGLETON = new Singleton();
 
-    public Singleton(){
+    public Singleton(Context context) {
+        super(context);
     }
 
-    public static Singleton getInstance(){
-        return SINGLETON;
+    public Singleton(Context context, AttributeSet attrs) {
+        super(context, attrs);
     }
 
-    private void mLog(){
-        Log.e("Singleton","test");
+    public Singleton(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+    }
+
+    public Singleton(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
     }
 }

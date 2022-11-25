@@ -12,6 +12,7 @@ import android.util.Log
  */
 class TestService : Service() {
     override fun onBind(intent: Intent?): IBinder? {
+        mLog("onBind")
         return null
     }
 

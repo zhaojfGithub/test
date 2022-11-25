@@ -18,6 +18,9 @@ launch 返回job
 async 返回Deffer
 调用cancel方法
 
+如果在类中使用记得对协程进行在结束时，记得cancel协程
+如果在Activity或者ViewModel中使用，可以直接使用 lifecycleScope 以及 viewModelScope 他们经过了处理 可以在需要的时候停止，根据lifecycle来确定
+
 3.异常
 kotlin协程的异常有两种
 1.协程取消

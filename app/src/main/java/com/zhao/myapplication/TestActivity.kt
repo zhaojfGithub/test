@@ -19,7 +19,7 @@ import com.zhao.myapplication.databinding.FragmentViewBinding
 
 class TestActivity : AppCompatActivity() {
 
-    private lateinit var viewBinder: ActivityTestBinding
+    //private lateinit var viewBinder: ActivityTestBinding
 
     private val conn:ServiceConnection = object : ServiceConnection{
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
@@ -34,20 +34,20 @@ class TestActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewBinder = ActivityTestBinding.inflate(layoutInflater)
-        setContentView(viewBinder.root)
+        //viewBinder = ActivityTestBinding.inflate(layoutInflater)
+        //setContentView(viewBinder.root)
         //viewBinder.viewPage.adapter = TestAdapter()
-        viewBinder.button.setOnClickListener {
+        //viewBinder.button.setOnClickListener {
             //val intent = Intent(this,MainActivity::class.java)
             //startActivity(intent)
-        }
-        viewBinder.button1.setOnClickListener {
+        //}
+        //viewBinder.button1.setOnClickListener {
             //unbindService(conn)
-        }
-        val intent = Intent(this,TestService::class.java)
-        bindService(intent,conn, Service.BIND_AUTO_CREATE)
-        mLog("onCreate")
-        Singleton.getInstance()
+        //}
+        //val intent = Intent(this,TestService::class.java)
+        //bindService(intent,conn, Service.BIND_AUTO_CREATE)
+        //mLog("onCreate")
+        //Singleton.getInstance()
     }
 
     override fun onStart() {

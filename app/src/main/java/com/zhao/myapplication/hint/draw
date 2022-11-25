@@ -13,4 +13,5 @@ Math.sinh  e的x次方
 Math.toDegrees() 将弧度转换成角度
 Math.toRadians() 将角度转换为弧度
 
+对数是对求幂的逆运算
 极坐标 是一个圆 加上角度

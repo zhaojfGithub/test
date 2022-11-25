@@ -14,6 +14,11 @@ ANR 是指应用程序未响应
 事件分发超时dispatchTimeout
 避免再主线程中进行耗时操作
 避免死锁，死循环的情况
+基本分完一下几点
+1.输入事件：5s内无响应，如屏幕触碰事件
+2.广播：前台广播（BroadcastReceiver）的的onReceive方法时10s没有处理完成，后台广播的超时事件为60s
+3.Service：前台的service20s没有执行完毕；后台的Service200s没有执行完毕
+4.ContentProvider：10s内ContentProvider的publish未执行完毕
 
 View的绘制流程
 从activity的setContentView 开始
@@ -158,5 +163,27 @@ CmakeLists 控制编译产生的文件
 以JAVA_开头，包名载中加上NativeLib+方法名+JNI
 
 
+
+
+
+
+///////////////////////////////////////////////////////////////////////////
+滚动
+滚动类 Scroller,OverScroller
+两者都是计算滑动的事件以及当前的位置，不同的是OverScroller多出一个超出阈值回弹，可以同设置为0取消回弹
+View 滑动的基础是 mScrollX 和 mScrollY 两个属性。
+调用一个 View 的滑动有 scrollBy() 和 scrollTo() 两种，前一种是增量式，后一种直接到位。
+在View的draw方法中有computeScroll方法，可在进行复写，在其中获取Scroller中的mCurrentX，mCurrentY，即经过Scroller计算之后的坐标
+科根据自己的规则调用scrollTo方法，就可以达到平稳滑动的效果,
+Scroller 提供快速滚动的功能，在onTouEvent方法中获取相应的力度，然后调用Scroller的fling方法
+力度可有VelocityTracker类计算得出
+mScrollX、mScrollY在Canvas坐标中的意义，，区分手指滑动方向、内容滑动方向和mScrollX、mScrollY数值的关系
+mScrollX此视图的内容水平滚动的偏移量（以像素为单位）
+mScrollY此视图的内容垂直滚动的偏移量（以像素为单位）
+手指向左滑动，内容将向右显示，这时 mScrollX > 0。
+手指向右滑动，内容将向左显示，这时 mScrollX < 0.
+手指向上滑动，内容将向下显示，这时 mScrollY < 0。
+手指向下滑动，内容将向上显示，这时 mScrollY > 0.
+ScrollLayoutView 用于测试demo
 
 
