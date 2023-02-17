@@ -38,13 +38,13 @@ class TestActivity : AppCompatActivity() {
         //setContentView(viewBinder.root)
         //viewBinder.viewPage.adapter = TestAdapter()
         //viewBinder.button.setOnClickListener {
-            //val intent = Intent(this,MainActivity::class.java)
+            //val intent = Intent(this,MainActivity::class.java_basics)
             //startActivity(intent)
         //}
         //viewBinder.button1.setOnClickListener {
             //unbindService(conn)
         //}
-        //val intent = Intent(this,TestService::class.java)
+        //val intent = Intent(this,TestService::class.java_basics)
         //bindService(intent,conn, Service.BIND_AUTO_CREATE)
         //mLog("onCreate")
         //Singleton.getInstance()

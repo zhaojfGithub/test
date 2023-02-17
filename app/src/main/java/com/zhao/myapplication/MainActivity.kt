@@ -44,7 +44,7 @@ import kotlin.random.Random
 class MainActivity : AppCompatActivity() {
 
 
-    //val viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+    //val viewModel = ViewModelProvider(this)[MainViewModel::class.java_basics]
 
     private val fragments: List<Fragment> = listOf(
         TestFragment.newInstance("testFragment1", ""),
@@ -86,25 +86,36 @@ class MainActivity : AppCompatActivity() {
         viewBinder = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinder.root)
 
-       /* viewBinder.root.transitionName = "Toolbar"
-        window.sharedElementEnterTransition = MaterialContainerTransform().apply {
-            addTarget(viewBinder.root)
-            duration = 300L
-            containerColor = ContextCompat.getColor(this@MainActivity,R.color.white)
+        var handlerThread = HandlerThread("handlerThread")
+        handlerThread.start()
+        var handler1 = object : Handler(handlerThread.looper){
+            override fun handleMessage(msg: Message) {
+                super.handleMessage(msg)
+            }
         }
-        window.sharedElementReturnTransition = MaterialContainerTransform().apply {
-            addTarget(viewBinder.root)
-            duration = 250L
-            containerColor = ContextCompat.getColor(this@MainActivity,R.color.white)
+        handler.sendMessage(Message.obtain())
+        handler.post {
+
         }
-        window.sharedElementsUseOverlay = false
+        /* viewBinder.root.transitionName = "Toolbar"
+         window.sharedElementEnterTransition = MaterialContainerTransform().apply {
+             aaddTarget(viewBinder.root)
+             duration = 300L
+             containerColor = ContextCompat.getColor(this@MainActivity,R.color.white)
+         }
+         window.sharedElementReturnTransition = MaterialContainerTransform().apply {
+             addTarget(viewBinder.root)
+             duration = 250L
+             containerColor = ContextCompat.getColor(this@MainActivity,R.color.white)
+         }
+         window.sharedElementsUseOverlay = false
 
 
-        val name = "Toolbar"
-        viewBinder.button1.text = name
+         val name = "Toolbar"
+         viewBinder.button1.text = name
 
-*/
-        /*val intent = Intent(this,TestService::class.java)
+ */
+        /*val intent = Intent(this,TestService::class.java_basics)
         bindService(intent,conn, Service.BIND_AUTO_CREATE)*/
         initLauncher()
         /*viewBinder.button.setOnClickListener {

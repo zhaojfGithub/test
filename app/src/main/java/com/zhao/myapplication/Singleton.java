@@ -1,30 +1,22 @@
 package com.zhao.myapplication;
 
-import android.content.Context;
-import android.util.AttributeSet;
-import android.widget.ScrollView;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * 创建时间： 2022/6/30
  * 编   写：  zjf
  * 页面功能:
  */
-public class Singleton extends ScrollView {
+public class Singleton {
 
 
-    public Singleton(Context context) {
-        super(context);
-    }
+    @NotNull
+    private static final Singleton INSTANCE;
 
-    public Singleton(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
 
-    public Singleton(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-    }
+    private Singleton(){}
 
-    public Singleton(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
+    static {
+        INSTANCE = new Singleton();
     }
 }

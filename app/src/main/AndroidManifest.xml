@@ -47,7 +47,7 @@
             android:name=".test.MyTestActivity"
             android:exported="false" />
         <activity
-            android:name=".ItemActivity"
+            android:name=".LifeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

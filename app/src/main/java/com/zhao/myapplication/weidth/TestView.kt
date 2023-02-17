@@ -8,12 +8,17 @@ import android.graphics.Paint
 import android.graphics.RectF
 import android.util.AttributeSet
 import android.util.Log
+import android.view.KeyEvent
+import android.view.SurfaceView
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
+import androidx.customview.widget.ViewDragHelper
+import androidx.recyclerview.widget.DiffUtil
 import com.zhao.myapplication.R
+
 
 /**
  *创建时间： 2022/6/8
@@ -68,6 +73,24 @@ class TestView : View {
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
+        DiffUtil.calculateDiff(object : DiffUtil.Callback() {
+            override fun getOldListSize(): Int {
+                return 0
+            }
+
+            override fun getNewListSize(): Int {
+                return 0
+            }
+
+            override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+                return true
+            }
+
+            override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+                return false
+            }
+
+        })
         rectF.set(1F, 1F, width - 1F, height - 1F)
         settingPaint(Paint.Style.STROKE, R.color.purple_200, 1F, Paint.Cap.SQUARE)
         canvas.drawRect(rectF, paint)

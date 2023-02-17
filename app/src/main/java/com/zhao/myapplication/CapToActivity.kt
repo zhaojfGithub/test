@@ -40,4 +40,8 @@ class CapToActivity : AppCompatActivity() {
 
 
     }
+
+    override fun onResume() {
+        super.onResume()
+    }
 }

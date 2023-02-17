@@ -187,3 +187,32 @@ mScrollY此视图的内容垂直滚动的偏移量（以像素为单位）
 ScrollLayoutView 用于测试demo
 
 
+//////////////////////////////////////////////////////////////////////////////
+android 中 View 树结构
+activity -> phoneWindow -> DecorView -> RootView ->ViewGroup or View
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////
+对于mParent：Activity中mParent为父Activity  此Activity本质为TabActivity
+            TabActivity extends ActivityGroup extends Activity
+            在ActivityGroup中会创建一个LocalActivityManager传入，当TabActivity使用得时候会调用Activity.startActivityNow()把对象为 LocalActivityManager包含得TabActivity的this传过去
+            然后startActivityNow会给mParent赋值，所以结论为mParent为父Activity的this
+
+ActivityThread->  APP的入口 主线程  UI线程，管理、执行、调度activities、broadcasts、以及activity manager请求的其他操作
+ClientTransactionHandler->ActivityThread继承了ClientTransactionHandler实现了ActivityThreadInternal
+ApplicationThread->  ActivityThread的内部类。AMS通过binder代理调用到Application中方法后，通过主线程中开始的handler消息轮询来通知主线程调用相关方法
+IApplicationThread-> 是系统进程只有的app进程中ApplicationThread的Binder代理对象，系统进程通过ProcessRecord.IApplicationThread调用app进程的相关方法
+Instrumentation->用户实现应用程序插装代码的基本类，主要负责Activity和Application的创建和生命周期的调用，这个类在任何应用程序代码之前被实例化，从而允许我们监视系统与应用程序的所有交互
+ActivityTaskManager-> 提供有关activities及其容器(如任务、堆栈和Display)的信息并与之交互,实现了IActivityTaskManager.Stub
+IActivityTaskManager-> IActivityTaskManager继承了IInterface，是AMS在app进程的binder代理对象
+ActivityTaskManager->此类提供有关activities及其容器(如任务、堆栈和Display)的信息并与之交互。
+ActivityManager->
+ActivityManagerService->
+ActivityStarter->用于解释Activity在什么时候，怎样启动一个控制器，这个类用于确定Intent和flags应如何转换为activity以及相关任务和堆栈的所有逻辑
+ActivityStack->Activity在AMS的栈管理类，activity的单个堆栈的状态和管理这个类里
+ActivityStackSupervisor->负责所有栈的管理。内部管理了mRunningTasks和mRecentTasks两个Activity栈，mRunningTasks是Helper类抽象出用于获取当前运行的任务集的逻辑；mRecentTasks管理的是最近任务的历史列表，包括非活动任务。
+ClientLifecycleManager->能够组合多个生命周期转换请求,或回调，并将它们作为单个事务执行
+ClientTransaction->保存一系列消息的容器，这些消息可能被发送到客户端，包括一个回调列表和一个最终的生命周期状态。
+ActivityLifecycleItem->用以请求Activity应该到达的生命周期状态
