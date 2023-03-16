@@ -22,7 +22,7 @@ class MainViewModel : ViewModel() {
     private val data = MutableLiveData<String>()
 
 
-
+    val isState = MutableLiveData<Boolean>()
 
 
     fun testLaunch() {
